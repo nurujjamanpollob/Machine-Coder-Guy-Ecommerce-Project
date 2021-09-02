@@ -1,0 +1,36 @@
+// we are using boot plugin here in order to create bootjar task
+apply plugin: "org.springframework.boot"
+
+// this is requires for groovy
+task wrapper(type: Wrapper){
+    gradleVersion = '7.1.1'
+}
+
+// this job is requires for kotlin dls
+task prepareKotlinBuildScriptModel {
+
+}
+
+// module level dependency goes here
+dependencies {
+
+
+    implementation project(":CommonLibrary")
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa:2.5.4'
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf:2.5.4'
+    implementation 'org.springframework.boot:spring-boot-starter-web:2.5.4'
+    implementation 'org.webjars:jquery:3.6.0'
+    implementation 'org.webjars:bootstrap:5.1.0'
+    runtimeOnly 'mysql:mysql-connector-java'
+    testImplementation('org.springframework.boot:spring-boot-starter-test')
+
+
+}
+
+// we are defining bootjar task here for compile jar compatible with spring boot
+bootJar{
+
+    mainClassName("com.nurujjamanpollob.machinecoderguystore.frontend.FrontendApplication")
+
+}
+

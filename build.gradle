@@ -1,0 +1,66 @@
+// top lvl build script goes here
+buildscript {
+
+    dependencies {
+
+    }
+}
+
+// new styled plugin declaration!
+plugins {
+    id 'org.springframework.boot' version '2.5.4'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'java'
+}
+
+// we are simply describing parent group with version declaration for spring boot sub modules
+// to keep all information persistent with DRY principle.
+subprojects {
+
+    group = 'com.nurujjamanpollob.machinecoderguystore'
+    version = '0.0.1-SNAPSHOT'
+    sourceCompatibility = '11'
+
+    apply plugin: 'java'
+    apply plugin: 'io.spring.dependency-management'
+    apply plugin: 'java-library'
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencyManagement {
+        imports {
+            // you can import your own dependency management module here
+            //  mavenBom("org.springframework.boot:spring-boot-dependencies:2.1.7.RELEASE")
+        }
+    }
+
+}
+
+
+repositories {
+    mavenCentral()
+}
+
+
+// needed these two groovy syntax for bootjar main class error
+// as we don't need main class in our parent project
+bootJar {
+    enabled = false
+}
+
+jar {
+    enabled = true
+}
+
+// useful - if you need to import classpath, you can paste here
+// for now - I do not need it.
+dependencies {
+
+}
+
+// Java unit test invocation as gradle task
+test {
+    useJUnitPlatform()
+}
