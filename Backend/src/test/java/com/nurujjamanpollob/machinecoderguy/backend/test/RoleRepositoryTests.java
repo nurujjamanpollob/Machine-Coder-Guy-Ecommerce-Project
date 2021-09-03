@@ -1,7 +1,24 @@
+/*
+ * Copyright (c) 2021 Nurujjaman Pollob, All Right Reserved.
+ *     Licensed under the Apache License, Version 2.0 (the "License");
+ *     you may not use this file except in compliance with the License.
+ *     You may obtain a copy of the License at
+ *
+ *           http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *     Unless required by applicable law or agreed to in writing, software
+ *     distributed under the License is distributed on an "AS IS" BASIS,
+ *     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *     See the License for the specific language governing permissions and
+ *     limitations under the License.
+ *
+ */
+
 package com.nurujjamanpollob.machinecoderguy.backend.test;
 
 import com.nurujjamanpollob.machinecoderguystore.backend.users.RoleRepository;
 import com.nurujjamanpollob.machinecoderguystore.commonlibrary.Role;
+import com.nurujjamanpollob.machinecoderguystore.commonlibrary.utilities.Variables;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -36,7 +53,7 @@ public class RoleRepositoryTests {
     public void createAdminTest() {
 
         // create test for admin role
-        Role adminRole = new Role("Admin", "The admin is can manage everything");
+        Role adminRole = new Role(Variables.DATABASE_COLUMN_ROLE_TYPE_ADMIN, "The admin is can manage everything");
 
         // save newly created data to database and assign to new object
         Role role = repository.save(adminRole);
@@ -52,7 +69,7 @@ public class RoleRepositoryTests {
     public void createSalesPersonRoleTest() {
 
         // create test for sales person role
-        Role salesPersonRole = new Role("Salesperson", "Manage product price" +
+        Role salesPersonRole = new Role(Variables.DATABASE_COLUMN_ROLE_TYPE_SALES_PERSON, "Manage product price" +
                 ", customers, shipping, order & sales report");
 
 
@@ -71,7 +88,7 @@ public class RoleRepositoryTests {
 
 
         // create a new role for editor
-        Role editorRole = new Role("Editor", "Manage categories" +
+        Role editorRole = new Role(Variables.DATABASE_COLUMN_ROLE_TYPE_EDITOR, "Manage categories" +
                 ", brands, products, articles & menus");
 
         // save newly created data to database and assign to new object
@@ -88,7 +105,7 @@ public class RoleRepositoryTests {
 
 
         // create a new role for shipper
-        Role shipperRole = new Role("Shipper", "View products" +
+        Role shipperRole = new Role(Variables.DATABASE_COLUMN_ROLE_TYPE_SHIPPER, "View products" +
                 ", View Order, update order Status");
 
         // save newly created data to database and assign to new object
@@ -104,7 +121,7 @@ public class RoleRepositoryTests {
 
 
         // create a new role for shipper
-        Role assistantRole = new Role("Assistant", "Manage questions" +
+        Role assistantRole = new Role(Variables.DATABASE_COLUMN_ROLE_TYPE_ASSISTANT, "Manage questions" +
                 "and reviews of product");
 
         // save newly created data to database and assign to new object

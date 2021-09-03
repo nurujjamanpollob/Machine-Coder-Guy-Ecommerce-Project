@@ -1,4 +1,3 @@
-
 /*
  * Copyright (c) 2021 Nurujjaman Pollob, All Right Reserved.
  *     Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,17 +16,11 @@
 
 package com.nurujjamanpollob.machinecoderguystore.backend.users;
 
-import com.nurujjamanpollob.machinecoderguystore.commonlibrary.Role;
+import com.nurujjamanpollob.machinecoderguystore.commonlibrary.User;
 import org.springframework.data.repository.CrudRepository;
 
-
-/**
- * @author Nurujjaman Pollob
- *
- */
+public interface UserRepository extends CrudRepository<User, Long> {
 
 
-@org.springframework.stereotype.Repository
-public interface RoleRepository extends CrudRepository<Role, Integer>{
 
 }
