@@ -24,7 +24,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 @EnableJpaRepositories(basePackages = {"com.nurujjamanpollob.machinecoderguystore.backend.*"})
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @EntityScan({"com.nurujjamanpollob.machinecoderguystore.commonlibrary", "com.nurujjamanpollob.machinecoderguystore.backend.users"})
-@ComponentScan(basePackages = { "com.nurujjamanpollob.machinecoderguystore.*" })
+@ComponentScan(basePackages = {"com.nurujjamanpollob.machinecoderguystore.*"})
 @Rollback(value = false)
 public class RoleRepositoryTests {
 
@@ -33,13 +33,13 @@ public class RoleRepositoryTests {
 
     // create first test! yeeehoo!!!
     @Test
-    public void createAdminTest(){
+    public void createAdminTest() {
 
         // create test for admin role
         Role adminRole = new Role("Admin", "The admin is can manage everything");
 
         // save newly created data to database and assign to new object
-        Role role =repository.save(adminRole);
+        Role role = repository.save(adminRole);
 
         //try to check if data is not null!
         assertThat(role.getRoleID()).isGreaterThan(0);
@@ -49,19 +49,15 @@ public class RoleRepositoryTests {
 
 
     @Test
-    public void createSalesPersonRoleTest(){
+    public void createSalesPersonRoleTest() {
 
         // create test for sales person role
         Role salesPersonRole = new Role("Salesperson", "Manage product price" +
                 ", customers, shipping, order & sales report");
 
 
-
-
-
-
         // save newly created data to database and assign to new object
-        Role role =repository.save(salesPersonRole);
+        Role role = repository.save(salesPersonRole);
 
         //try to check if data is not null!
         assertThat(role.getRoleName()).isNotNull();
@@ -70,9 +66,8 @@ public class RoleRepositoryTests {
     }
 
 
-
     @Test
-    public void createEditorRoleTest(){
+    public void createEditorRoleTest() {
 
 
         // create a new role for editor
@@ -80,7 +75,7 @@ public class RoleRepositoryTests {
                 ", brands, products, articles & menus");
 
         // save newly created data to database and assign to new object
-        Role role =repository.save(editorRole);
+        Role role = repository.save(editorRole);
 
         //try to check if data is not null!
         assertThat(role.getRoleName()).isNotNull();
@@ -88,9 +83,8 @@ public class RoleRepositoryTests {
     }
 
 
-
     @Test
-    public void createShipperRoleTest(){
+    public void createShipperRoleTest() {
 
 
         // create a new role for shipper
@@ -98,7 +92,7 @@ public class RoleRepositoryTests {
                 ", View Order, update order Status");
 
         // save newly created data to database and assign to new object
-        Role role =repository.save(shipperRole);
+        Role role = repository.save(shipperRole);
 
         //try to check if data is not null!
         assertThat(role.getRoleName()).isNotNull();
@@ -106,7 +100,7 @@ public class RoleRepositoryTests {
     }
 
     @Test
-    public void createAssistantRoleTest(){
+    public void createAssistantRoleTest() {
 
 
         // create a new role for shipper
@@ -114,7 +108,7 @@ public class RoleRepositoryTests {
                 "and reviews of product");
 
         // save newly created data to database and assign to new object
-        Role role =repository.save(assistantRole);
+        Role role = repository.save(assistantRole);
 
         //try to check if data is not null!
         assertThat(role.getRoleName()).isNotNull();

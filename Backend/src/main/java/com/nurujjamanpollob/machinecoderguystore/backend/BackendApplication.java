@@ -7,7 +7,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @EntityScan({"com.nurujjamanpollob.machinecoderguystore.commonlibrary", "com.nurujjamanpollob.machinecoderguystore.backend.users"})
-@ComponentScan(basePackages = { "com.nurujjamanpollob.machinecoderguystore.*" })
+@ComponentScan(basePackages = {"com.nurujjamanpollob.machinecoderguystore.*"})
 public class BackendApplication {
 
     public static void main(String[] args) {
