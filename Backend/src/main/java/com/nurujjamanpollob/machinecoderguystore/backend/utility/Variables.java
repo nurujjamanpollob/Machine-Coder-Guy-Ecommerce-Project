@@ -14,20 +14,10 @@
  *
  */
 
-package com.nurujjamanpollob.machinecoderguystore.backend;
+package com.nurujjamanpollob.machinecoderguystore.backend.utility;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
+public class Variables {
 
-@Controller
-public class MainController {
-
-
-    @GetMapping("/")
-    public String viewHomePage() {
-
-
-        return "index";
-    }
-
+    public static final String DIRECTORY_WEB_USER_LINK = "users";
+    public static final String USER_MODEL_ATTRIBUTE_ALL_USER = "alluser";
 }

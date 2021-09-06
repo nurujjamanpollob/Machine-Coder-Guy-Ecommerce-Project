@@ -14,20 +14,26 @@
  *
  */
 
-package com.nurujjamanpollob.machinecoderguystore.backend;
-
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-
-@Controller
-public class MainController {
+package com.nurujjamanpollob.machinecoderguystore.backend.users;
 
 
-    @GetMapping("/")
-    public String viewHomePage() {
+import com.nurujjamanpollob.machinecoderguystore.commonlibrary.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class UserService {
 
 
-        return "index";
+    @Autowired
+    private UserRepository userRepository;
+
+
+    public List<User> getAllUser(){
+
+
+        return (List<User>) userRepository.findAll();
     }
-
 }

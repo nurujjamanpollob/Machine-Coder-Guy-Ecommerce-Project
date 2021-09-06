@@ -17,6 +17,7 @@
 package com.nurujjamanpollob.machinecoderguy.backend.test;
 
 
+import com.fasterxml.jackson.databind.util.ArrayIterator;
 import com.nurujjamanpollob.machinecoderguystore.backend.users.UserRepository;
 import com.nurujjamanpollob.machinecoderguystore.commonlibrary.Role;
 import com.nurujjamanpollob.machinecoderguystore.commonlibrary.User;
@@ -30,6 +31,11 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
@@ -53,21 +59,111 @@ public class UserRepositoryTests {
 
 
     @Test
-    public void createTestUser(){
-
+    public void createTestUserWithOneRole(){
 
         Role admin = entityManager.find(Role.class, 2);
-
         User userNurujjamanPollob = new User("nurujjamanpollob@gmail.com", "passcode", "Nurujjaman", "Pollob");
-
         userNurujjamanPollob.addRole(admin);
-
-      User savedUser = userRepository.save(userNurujjamanPollob);
-
-
-      assertThat(savedUser.getId()).isGreaterThan(0);
+        User savedUser = userRepository.save(userNurujjamanPollob);
+        assertThat(savedUser.getId()).isGreaterThan(0);
 
     }
+
+
+    @Test
+    public void createUserWithTwoRole(){
+
+        User userVlad = new User("vlad@gmail.com", "passcode", "Vlad", "Sonkin");
+        Role editor = new Role(2);
+        Role assistant = new Role(5);
+
+        userVlad.addRole(editor);
+        userVlad.addRole(assistant);
+
+
+        User savedUser = userRepository.save(userVlad);
+
+
+        assertThat(savedUser.getId()).isGreaterThan(0);
+
+
+    }
+
+
+    @Test
+    public void listAllUserFromDatabase(){
+
+
+        Iterable<User> userList = userRepository.findAll();
+
+        userList.forEach(System.out::println);
+
+    }
+
+
+    @Test
+    public void testGetUserByID(){
+
+        User admin = userRepository.findById(2L).isPresent() ? userRepository.findById(2L).get() : null;
+
+        assertThat(admin).isNotNull();
+
+    }
+
+
+
+    @Test
+    public void testUpdateUserDetails(){
+
+        User admin = userRepository.findById(2L).isPresent() ? userRepository.findById(2L).get() : null;
+
+        if (admin != null) {
+            admin.setEnabled(true);
+            admin.setEmail("user@domain.com");
+            userRepository.save(admin);
+        }
+
+
+
+    }
+
+    @Test
+    public void testUpdateUserRole(){
+
+        User vlad = userRepository.findById(2L).isPresent() ? userRepository.findById(2L).get() : null;
+
+        if (vlad != null) {
+
+            Role editor = new Role(2);
+
+            Role salesPerson = new Role(4);
+
+            vlad.getRoles().remove(editor);
+            vlad.getRoles().add(salesPerson);
+
+            userRepository.save(vlad);
+
+
+        }
+
+
+
+    }
+
+
+
+    @Test
+    public void testDeleteUserBasedOnID(){
+
+
+        userRepository.deleteById(2L);
+
+
+
+    }
+
+
+
 
 
 }

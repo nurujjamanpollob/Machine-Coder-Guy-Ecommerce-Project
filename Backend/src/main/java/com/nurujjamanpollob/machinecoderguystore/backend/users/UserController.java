@@ -14,20 +14,38 @@
  *
  */
 
-package com.nurujjamanpollob.machinecoderguystore.backend;
+package com.nurujjamanpollob.machinecoderguystore.backend.users;
 
+
+import com.nurujjamanpollob.machinecoderguystore.backend.utility.Variables;
+import com.nurujjamanpollob.machinecoderguystore.commonlibrary.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.util.List;
+
 @Controller
-public class MainController {
+public class UserController {
 
 
-    @GetMapping("/")
-    public String viewHomePage() {
+    @Autowired
+    private UserService userService;
 
 
-        return "index";
+    @GetMapping("/users")
+    public String listAllUsers(Model uiModel){
+
+        // get all user from service
+       List<User> allUser = userService.getAllUser();
+
+       //add attribute to UI MODEL
+        uiModel.addAttribute(Variables.USER_MODEL_ATTRIBUTE_ALL_USER, allUser);
+
+        return Variables.DIRECTORY_WEB_USER_LINK;
     }
+
+
 
 }
