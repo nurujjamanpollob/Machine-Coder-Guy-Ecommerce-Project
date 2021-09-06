@@ -19,11 +19,12 @@ package com.nurujjamanpollob.machinecoderguystore.backend;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
+// Create root controller of this application
 @Controller
 public class MainController {
 
 
-    @GetMapping("")
+    @GetMapping("/")
     public String viewHomePage() {
 
 

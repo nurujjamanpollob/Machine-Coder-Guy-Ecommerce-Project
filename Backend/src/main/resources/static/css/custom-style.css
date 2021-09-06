@@ -18,3 +18,18 @@
 	
 	max-width: 200px;
 }
+
+.user-signup-form-max-width{
+
+	max-width: 700px;
+}
+
+.user-signup-form-margin{
+
+	margin: 0 auto;
+}
+
+.text-bold{
+	font-weight: bold;
+
+}

@@ -24,6 +24,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.util.Objects;
 
 @Entity
 @Table(name = Variables.DATABASE_TABLE_NAME_ROLES)
@@ -50,6 +51,12 @@ public class Role {
 
 	}
 
+	// create constructor with no parameter
+	public Role(int id){
+
+		this.id = id;
+
+	}
 	
 	//create field of role id and generate id in database
 	@Id
@@ -99,6 +106,28 @@ public class Role {
 		
 		this.description = roleDescription;
 	}
-	
-	
+
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+
+		Role role = (Role) o;
+
+		return Objects.equals(id, role.id);
+
+	}
+
+	@Override
+	public int hashCode() {
+		return id != null ? id.hashCode() : 0;
+	}
+
+
+	// Return the role name
+	@Override
+	public String toString() {
+		return this.name;
+	}
 }

@@ -43,4 +43,9 @@ public class Variables {
     public static final String DATABASE_COLUMN_ROLE_KEY_DESCRIPTION = "description";
 
 
+    // Here we are adding some variable for indicate entity point for our application
+    public static final String COMMON_LIBRARY_ENTRY_POINT = "com.nurujjamanpollob.machinecoderguystore.commonlibrary";
+    public static final String BASE_PACKAGE_NAME = "com.nurujjamanpollob.machinecoderguystore.*";
+
+
 }

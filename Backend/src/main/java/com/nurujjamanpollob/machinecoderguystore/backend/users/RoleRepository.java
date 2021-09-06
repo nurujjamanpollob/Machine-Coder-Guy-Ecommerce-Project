@@ -23,11 +23,11 @@ import org.springframework.data.repository.CrudRepository;
 
 /**
  * @author Nurujjaman Pollob
- *
  */
 
 
+//Create interface RoleRepository extends CrudRepository with given Params<Role, ID>
 @org.springframework.stereotype.Repository
-public interface RoleRepository extends CrudRepository<Role, Integer>{
+public interface RoleRepository extends CrudRepository<Role, Integer> {
 
 }

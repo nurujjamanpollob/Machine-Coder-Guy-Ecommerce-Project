@@ -89,8 +89,48 @@
     </div>
     <!-- Placeholder of headline area -->
     <div>
-        <h1> Welcome to Machine Coder Guy Admin Area! </h1>
+        <h1> Manage Users - Machine Coder Guy Admin Panel </h1>
+        <a th:href="@{/users/new}">Create new User</a>
     </div>
+
+    <!-- create user table area -->
+
+    <table class="table table-responsive table-bordered table-striped table-hover">
+        <thead class="dropdown-menu-dark tableSubHeadingColor">
+        <tr>
+
+            <th>User ID</th>
+            <th>Photos</th>
+            <th>Email</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Roles</th>
+            <th>Enabled</th>
+            <th></th>
+        </tr>
+        </thead>
+
+        <!-- create table body that will contain all user information presented in table style -->
+        <tbody>
+
+        <!-- get user list programmatically from service controller -->
+        <tr th:each="user : ${alluser}">
+
+            <td>[[${user.id}]]</td>
+            <td></td>
+            <td>[[${user.email}]]</td>
+            <td>[[${user.firstName}]]</td>
+            <td>[[${user.lastName}]]</td>
+            <td>[[${user.roles}]]</td>
+            <td>[[${user.enabled}]]</td>
+
+            <td>E-mail &nbsp; Delete</td>
+
+        </tr>
+
+        </tbody>
+    </table>
+
     <!-- This is footer Area -->
     <div class="text-center">
         <p>Machine Coder guy control panel - Copyright &copy; Nurujjaman Pollob 2021</p>

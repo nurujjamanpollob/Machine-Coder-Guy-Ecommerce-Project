@@ -16,11 +16,41 @@
 
 package com.nurujjamanpollob.machinecoderguystore.backend.users;
 
-import com.nurujjamanpollob.machinecoderguystore.commonlibrary.User;
-import org.springframework.data.repository.CrudRepository;
 
-// create interface UserRepository  CrudRepository<User, ID>
-public interface UserRepository extends CrudRepository<User, Long> {
+import com.nurujjamanpollob.machinecoderguystore.commonlibrary.Role;
+import com.nurujjamanpollob.machinecoderguystore.commonlibrary.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class UserService {
+
+
+    // Spring Dependency with method level Injection
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private RoleRepository roleRepository;
+
+
+    // return all user data as Array
+    public List<User> getAllUser() {
+        return (List<User>) userRepository.findAll();
+    }
+
+
+    //return all role data as array{name with description, id, etc}
+    public List<Role> getAllRoles(){
+
+    return    (List<Role>) roleRepository.findAll();
+    }
+
+    public void saveUser(User user){
+
+        userRepository.save(user);
+    }
 
 
 }
