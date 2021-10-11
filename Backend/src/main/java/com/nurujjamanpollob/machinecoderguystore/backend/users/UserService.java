@@ -45,17 +45,18 @@ public class UserService {
 
 
     //return all role data as array{name with description, id, etc}
-    public List<Role> getAllRoles(){
+    public List<Role> getAllRoles() {
 
-    return    (List<Role>) roleRepository.findAll();
+        return (List<Role>) roleRepository.findAll();
     }
 
     /**
      * This method will be used to save newly created user
+     *
      * @param user pass user object to save
      * @see UserRepository class for more information.
      */
-    public void saveUser(User user){
+    public void saveUser(User user) {
         // before save any user, we should save user password
         encodeUserPassword(user);
 
@@ -66,10 +67,11 @@ public class UserService {
     /**
      * Replace user password with encoded one
      * Requires user Object
-     * @see org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder for more information on how password encoder works.
+     *
      * @param user pass User object here.
+     * @see org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder for more information on how password encoder works.
      */
-    public void encodeUserPassword(User user){
+    public void encodeUserPassword(User user) {
 
 
         // get current password and replace with encoded one
