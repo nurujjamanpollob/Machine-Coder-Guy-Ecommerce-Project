@@ -16,5 +16,24 @@
 
 package com.nurujjamanpollob.machinecoderguy.backend.test;
 
+import org.junit.jupiter.api.Test;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+
 public class PasswordEncoderTest {
+
+
+    @Test
+    public void passwordEncodeTest(){
+
+
+       // Create encoded password
+        String encodedPasscode = new BCryptPasswordEncoder().encode("machinecoderguy2021");
+
+
+        // check if everything is okay
+        assertThat(new BCryptPasswordEncoder().matches("machinecoderguy2021", encodedPasscode)).isTrue();
+
+    }
 }
