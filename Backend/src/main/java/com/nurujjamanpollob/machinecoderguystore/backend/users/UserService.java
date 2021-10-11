@@ -20,6 +20,7 @@ package com.nurujjamanpollob.machinecoderguystore.backend.users;
 import com.nurujjamanpollob.machinecoderguystore.commonlibrary.Role;
 import com.nurujjamanpollob.machinecoderguystore.commonlibrary.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -33,6 +34,8 @@ public class UserService {
     private UserRepository userRepository;
     @Autowired
     private RoleRepository roleRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
 
     // return all user data as Array
@@ -47,10 +50,30 @@ public class UserService {
     return    (List<Role>) roleRepository.findAll();
     }
 
+    /**
+     * This method will be used to save newly created user
+     * @param user pass user object to save
+     * @see UserRepository class for more information.
+     */
     public void saveUser(User user){
+        // before save any user, we should save user password
+        encodeUserPassword(user);
 
         userRepository.save(user);
     }
 
+
+    /**
+     * Replace user password with encoded one
+     * Requires user Object
+     * @see org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder for more information on how password encoder works.
+     * @param user pass User object here.
+     */
+    public void encodeUserPassword(User user){
+
+
+        // get current password and replace with encoded one
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+    }
 
 }
