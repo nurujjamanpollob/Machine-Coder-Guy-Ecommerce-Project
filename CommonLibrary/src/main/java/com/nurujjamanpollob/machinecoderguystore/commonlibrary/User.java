@@ -25,6 +25,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = Variables.DATABASE_TABLE_NAME_USERS)
+@SuppressWarnings({"UnusedDeclaration"})
 public class User {
 
     public User() {
@@ -61,10 +62,9 @@ public class User {
     private boolean enabled;
 
 
-
     // create roles set
     @ManyToMany
-    @JoinTable (
+    @JoinTable(
 
             name = Variables.DATABASE_TABLE_NAME_USER_ROLES,
             joinColumns = @JoinColumn(name = Variables.DATABASE_TABLE_NAME_USER_ROLES_COLUMN_ID),
@@ -72,8 +72,6 @@ public class User {
 
     )
     private Set<Role> roles = new HashSet<>();
-
-
 
 
     public String getEmail() {
@@ -140,7 +138,7 @@ public class User {
         this.roles = roles;
     }
 
-    public void addRole(Role role){
+    public void addRole(Role role) {
 
         this.roles.add(role);
 
