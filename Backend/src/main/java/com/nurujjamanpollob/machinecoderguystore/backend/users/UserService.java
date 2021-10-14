@@ -78,4 +78,16 @@ public class UserService {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
     }
 
+
+    /**
+     * 
+     * @param email email address to query by
+     * @return true if an existing matched with this email address, else false
+     * @see UserRepository#getUserByEmail for more information.
+     */
+    public boolean isUserUniqueByEmail(String email){
+
+        return userRepository.getUserByEmail(email) != null;
+    }
+
 }
