@@ -35,6 +35,9 @@ public class Variables {
     // Store URL for post mapping users/save
     public static final String POST_USERS_SAVE = "/users/save";
 
+    // Store email for post mapping users/check_email
+    public static final String POST_USERS_CHECK_EMAIL = "/users/check_email";
+
     // Store URL for redirect user after save
     public static final String REDIRECT_USER_AFTER_SAVE = "redirect:/users";
 
