@@ -87,7 +87,7 @@ public class UserService {
      */
     public boolean isUserUniqueByEmail(String email){
 
-        return userRepository.getUserByEmail(email) != null;
+        return userRepository.getUserByEmail(email) == null;
     }
 
 }
