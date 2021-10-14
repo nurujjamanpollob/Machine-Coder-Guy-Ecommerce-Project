@@ -43,13 +43,13 @@ dependencies {
 // as this module is solely for provide code support to other module
 bootJar {
 
-    enabled = false;
+    enabled = false
 }
 
 // we are allowing to build this project as jar file instead of bootjar
 jar {
 
-    enabled = true;
+    enabled = true
 }
 
 test {
