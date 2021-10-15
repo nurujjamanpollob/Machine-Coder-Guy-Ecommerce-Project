@@ -29,13 +29,13 @@ task prepareKotlinBuildScriptModel {
 // module level dependency goes here
 dependencies {
 
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa:2.5.4'
-    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf:2.5.4'
-    implementation 'org.springframework.boot:spring-boot-starter-web:2.5.4'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa:2.5.5'
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf:2.5.5'
+    implementation 'org.springframework.boot:spring-boot-starter-web:2.5.5'
     implementation 'org.webjars:jquery:3.6.0'
-    implementation 'org.webjars:bootstrap:5.1.0'
-    runtimeOnly 'mysql:mysql-connector-java'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test:2.5.4'
+    implementation 'org.webjars:bootstrap:5.1.1'
+    runtimeOnly 'mysql:mysql-connector-java:8.0.25'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test:2.5.5'
 
 }
 

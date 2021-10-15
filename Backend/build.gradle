@@ -14,48 +14,54 @@
  *
  */
 
-// we are using boot plugin here in order to create bootjar task
-apply plugin: "org.springframework.boot"
+project(":Backend") {
 
-// this is requires for groovy
-task wrapper(type: Wrapper) {
-    gradleVersion = '7.1.1'
-}
+
+// we are using boot plugin here in order to create bootjar task
+    apply plugin: "org.springframework.boot"
+    apply plugin: 'java'
+    apply plugin: 'kotlin'
+
 
 // this job is requires for kotlin dls
-task prepareKotlinBuildScriptModel {
+   task prepareKotlinBuildScriptModel {
 
-}
+    }
 
 // module level dependency goes here
-dependencies {
+    dependencies {
 
 
-    implementation project(":CommonLibrary")
-    implementation project(":RestController")
-    implementation 'org.springframework.boot:spring-boot-starter-security:2.5.5'
-    implementation 'org.springframework.security:spring-security-test:5.5.1'
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa:2.5.5'
-    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf:2.5.5'
-    implementation 'org.springframework.boot:spring-boot-starter-web:2.5.5'
-    implementation 'org.webjars:jquery:3.6.0'
-    implementation 'org.webjars:bootstrap:5.1.1'
-    testImplementation('org.springframework.boot:spring-boot-starter-test:2.5.5')
-    implementation('org.hibernate:hibernate-c3p0:5.5.7.Final')
-    runtimeOnly 'mysql:mysql-connector-java:8.0.25'
-    compileOnly('org.springframework.boot:spring-boot-devtools:2.5.5')
+        implementation project(":CommonLibrary")
+        runtimeOnly project(":RestController")
+        implementation 'org.springframework.boot:spring-boot-starter-security:2.5.5'
+        implementation 'org.springframework.security:spring-security-test:5.5.1'
+        implementation 'org.springframework.boot:spring-boot-starter-data-jpa:2.5.5'
+        implementation 'org.springframework.boot:spring-boot-starter-thymeleaf:2.5.5'
+        implementation 'org.springframework.boot:spring-boot-starter-web:2.5.5'
+        implementation 'org.webjars:jquery:3.6.0'
+        implementation 'org.webjars:bootstrap:5.1.1'
+        testImplementation('org.springframework.boot:spring-boot-starter-test:2.5.5')
+        implementation('org.hibernate:hibernate-c3p0:5.5.7.Final')
+        runtimeOnly 'mysql:mysql-connector-java:8.0.25'
+        compileOnly('org.springframework.boot:spring-boot-devtools:2.5.5')
 
 
-}
+    }
 
 // we are defining bootjar task here for compile jar compatible with spring boot
-bootJar {
+    bootJar {
 
-    mainClassName("com.nurujjamanpollob.machinecoderguystore.backend.BackendApplication")
+        mainClassName("com.nurujjamanpollob.machinecoderguystore.backend.BackendApplication")
 
 
-}
+    }
 
-test {
-    useJUnitPlatform()
+
+
+    test {
+        useJUnitPlatform()
+    }
+
+
 }
