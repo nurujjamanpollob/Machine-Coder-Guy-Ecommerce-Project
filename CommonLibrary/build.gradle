@@ -15,44 +15,48 @@
  */
 
 // we are using boot plugin here in order to create bootjar task
-apply plugin: "org.springframework.boot"
 
-// this is requires for groovy
-task wrapper(type: Wrapper) {
-    gradleVersion = '7.1.1'
-}
+project(":CommonLibrary") {
+
+
+    apply plugin: "org.springframework.boot"
+    apply plugin: 'java'
+    apply plugin: 'kotlin'
+
+
 // this job is requires for kotlin dls
-task prepareKotlinBuildScriptModel {
+    task prepareKotlinBuildScriptModel {
 
-}
+    }
 
 // module level dependency goes here
-dependencies {
+    dependencies {
 
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa:2.5.5'
-    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf:2.5.5'
-    implementation 'org.springframework.boot:spring-boot-starter-web:2.5.5'
-    implementation 'org.webjars:jquery:3.6.0'
-    implementation 'org.webjars:bootstrap:5.1.1'
-    runtimeOnly 'mysql:mysql-connector-java:8.0.25'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test:2.5.5'
+        implementation 'org.springframework.boot:spring-boot-starter-data-jpa:2.5.5'
+        implementation 'org.springframework.boot:spring-boot-starter-thymeleaf:2.5.5'
+        implementation 'org.springframework.boot:spring-boot-starter-web:2.5.5'
+        implementation 'org.webjars:jquery:3.6.0'
+        implementation 'org.webjars:bootstrap:5.1.1'
+        runtimeOnly 'mysql:mysql-connector-java:8.0.25'
+        testImplementation 'org.springframework.boot:spring-boot-starter-test:2.5.5'
 
-}
+    }
 
 // we will never allow building this project as standalone boot release
 // as this module is solely for provide code support to other module
-bootJar {
+    bootJar {
 
-    enabled = false;
-}
+        enabled = false;
+    }
 
 // we are allowing to build this project as jar file instead of bootjar
-jar {
+    jar {
 
-    enabled = true;
+        enabled = true;
+    }
+
+    test {
+        useJUnitPlatform()
+    }
+
 }
-
-test {
-    useJUnitPlatform()
-}
-
