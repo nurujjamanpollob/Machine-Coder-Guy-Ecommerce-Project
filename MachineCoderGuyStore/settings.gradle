@@ -1,0 +1,4 @@
+rootProject.name = 'MachineCoderGuyStore'
+include ':MachineCoderGuyCommon'
+include ':MachineCoderGuyBackend'
+include ':MachineCoderGuyFrontend'
