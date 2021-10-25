@@ -70,8 +70,6 @@ public class UserController {
         model.addAttribute(Variables.MODEL_ATTRIBUTE_ALL_ROLE, roleList);
 
 
-
-
         return Variables.DIRECTORY_WEB_NEW_USER_LINK;
     }
 
@@ -80,8 +78,6 @@ public class UserController {
     public String saveNewUser(User user){
 
         userService.saveUser(user);
-
-        System.out.println(user);
 
         return Variables.REDIRECT_USER_AFTER_SAVE;
     }

@@ -34,8 +34,6 @@ public class UserService {
     private UserRepository userRepository;
     @Autowired
     private RoleRepository roleRepository;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
 
 
     // return all user data as Array
@@ -56,28 +54,9 @@ public class UserService {
      * @param user pass user object to save
      * @see UserRepository class for more information.
      */
-    public void saveUser(User user) {
-        // before save any user, we should save user password
-        encodeUserPassword(user);
-
-        userRepository.save(user);
+    public User saveUser(User user) {
+      return userRepository.saveUserWithEncryptedPassword(user);
     }
-
-
-    /**
-     * Replace user password with encoded one
-     * Requires user Object
-     *
-     * @param user pass User object here.
-     * @see org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder for more information on how password encoder works.
-     */
-    public void encodeUserPassword(User user) {
-
-
-        // get current password and replace with encoded one
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-    }
-
 
     /**
      * 

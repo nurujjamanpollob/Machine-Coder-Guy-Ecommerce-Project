@@ -170,7 +170,7 @@ public class UserRepositoryTests {
 
        User user = userRepository.getUserByEmail(email);
 
-       assertThat(user).isNotNull();
+       assertThat(user).isNull();
 
     }
 

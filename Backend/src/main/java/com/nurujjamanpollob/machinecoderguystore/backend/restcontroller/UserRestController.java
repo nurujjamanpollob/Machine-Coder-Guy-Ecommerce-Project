@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Nurujjaman Pollob, All Right Reserved.
+ * Copyright (c) 2021-2021 Nurujjaman Pollob, All Right Reserved.
  *     Licensed under the Apache License, Version 2.0 (the "License");
  *     you may not use this file except in compliance with the License.
  *     You may obtain a copy of the License at
@@ -14,24 +14,28 @@
  *
  */
 
-package com.nurujjamanpollob.machinecoderguystore.restcontroller;
+package com.nurujjamanpollob.machinecoderguystore.backend.restcontroller;
 
 
 import com.nurujjamanpollob.machinecoderguystore.backend.users.UserService;
-import com.nurujjamanpollob.machinecoderguystore.restcontroller.extra.Variables;
+import com.nurujjamanpollob.machinecoderguystore.backend.utility.RequestUtil;
+import com.nurujjamanpollob.machinecoderguystore.backend.utility.Variables;
+import com.nurujjamanpollob.machinecoderguystore.commonlibrary.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Nurujjaman Pollob
- *
+ * <p>
  * Rest Controller Class for User object and UserService Object
- *
  * @see com.nurujjamanpollob.machinecoderguystore.commonlibrary.User and
  * @see com.nurujjamanpollob.machinecoderguystore.backend.users.UserService for more information
- *
  */
 @RestController
 public class UserRestController {
@@ -40,12 +44,28 @@ public class UserRestController {
     @Autowired
     private UserService userService;
 
-    @PostMapping(com.nurujjamanpollob.machinecoderguystore.backend.utility.Variables.POST_USERS_CHECK_EMAIL)
-    public String checkIfEmailIsDuplicated(@Param("email") String email){
+
+
+    /**
+     * This method respond to this GET request in following URL: $SERVER_URL/users/check_email
+     *
+     * @param email request parameter
+     * @return OK if email has no match in database, else it returns DUPLICATED
+     */
+
+    @GetMapping(Variables.GET_USERS_CHECK_EMAIL)
+    @ResponseBody
+    public String checkIfEmailIsUnique(@RequestParam(name = "email") String email) {
 
         return userService.isUserUniqueByEmail(email) ? Variables.USER_EMAIL_NOT_DUPLICATED : Variables.USER_EMAIL_DUPLICATED;
+
     }
 
+    @PostMapping("/users/save_new_user")
+    public User saveNewUser(@RequestBody User newUser){
+
+        return userService.saveUser(newUser);
+    }
 
 
 }

@@ -30,8 +30,6 @@ public class PasswordEncoderTest {
 
        // Create encoded password
         String encodedPasscode = new BCryptPasswordEncoder().encode("machinecoderguy2021");
-
-
         // check if everything is okay
         assertThat(new BCryptPasswordEncoder().matches("machinecoderguy2021", encodedPasscode)).isTrue();
 

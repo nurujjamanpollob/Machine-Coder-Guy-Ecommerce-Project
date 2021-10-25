@@ -36,11 +36,32 @@ public class Variables {
     public static final String POST_USERS_SAVE = "/users/save";
 
     // Store email for post mapping users/check_email
-    public static final String POST_USERS_CHECK_EMAIL = "/users/check_email";
+    public static final String GET_USERS_CHECK_EMAIL = "/users/check_email";
 
     // Store URL for redirect user after save
     public static final String REDIRECT_USER_AFTER_SAVE = "redirect:/users";
 
+
+    // Email User not duplicated String
+    public static String USER_EMAIL_NOT_DUPLICATED = "OK";
+
+
+    // Email User duplicated String
+    public static String USER_EMAIL_DUPLICATED = "DUPLICATED";
+
     // Here we are adding some variable for indicate entity point for our application
     public static final String BACKEND_LIBRARY_ENTRY_POINT_USER = "com.nurujjamanpollob.machinecoderguystore.backend.users";
+
+
+
+    public static Boolean isDataSaved = false;
+
+    public static Boolean getIsDataSaved(){
+
+        return isDataSaved;
+    }
+
+    public static void setIsDataSaved(Boolean isDataSaved) {
+        Variables.isDataSaved = isDataSaved;
+    }
 }

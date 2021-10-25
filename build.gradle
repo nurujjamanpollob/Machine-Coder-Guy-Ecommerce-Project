@@ -37,7 +37,7 @@ subprojects {
 
     group = 'com.nurujjamanpollob.machinecoderguystore'
     version = '0.0.1-SNAPSHOT'
-    sourceCompatibility = '11'
+    sourceCompatibility = '16'
 
     apply plugin: 'java'
     apply plugin: 'io.spring.dependency-management'

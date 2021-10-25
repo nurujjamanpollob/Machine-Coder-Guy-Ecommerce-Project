@@ -16,19 +16,34 @@
 
 package com.nurujjamanpollob.machinecoderguystore.backend.users;
 
+import com.nurujjamanpollob.machinecoderguystore.backend.utility.Variables;
 import com.nurujjamanpollob.machinecoderguystore.commonlibrary.User;
+import org.jetbrains.annotations.NotNull;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+import javax.persistence.Entity;
 
 // create interface UserRepository  CrudRepository<User, ID>
 @SuppressWarnings({"UnusedDeclaration"})
 public interface UserRepository extends CrudRepository<User, Long> {
 
 
+
+
     // query user by email, to check if user email is unique or not
     @Query("SELECT u FROM User u WHERE u.email = :email")
     User getUserByEmail(@Param("email") String email);
 
+    default User saveUserWithEncryptedPassword(User user){
 
+        user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
+
+       return save(user);
+
+    }
 }
