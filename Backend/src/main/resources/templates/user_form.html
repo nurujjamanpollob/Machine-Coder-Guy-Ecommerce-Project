@@ -15,14 +15,12 @@
   -->
 
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=2.0">
     <meta name="robots" content="noindex,nofollow">
-    <meta http-equiv="CACHE-CONTROL" CONTENT="text/html;">
     <meta http-equiv="Content-Type" CONTENT="">
-    <META HTTP-EQUIV="PRAGMA" CONTENT="NO-CACHE">
     <title> Home - Machine Coder Guy Admin Panel </title>
     <!-- Reference Stylesheets and JavaScript Files -->
     <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/5.1.1/css/bootstrap.min.css}"/>
@@ -37,7 +35,7 @@
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <!-- Application Logo -->
             <a class="navbar-brand" th:href="@{/}">
-                <img th:src="@{/images/app-icon.png}" class="app-icon-max-width"/>
+                <img th:src="@{/images/app-icon.png}" class="app-icon-max-width" alt="machine coder guy logo"/>
             </a>
             <!-- Create a navigation button, for mobile screen -->
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -102,8 +100,9 @@
             <div class="form-group row">
                 <label class="col-form-label col-sm-4">E-Mail:</label>
                 <div class="col-sm-8">
-                    <input type="email" th:field="${user.email}" id="email" class="form-control" required
-                           th:maxlength="120" th:minlength="7"/>
+                    <label for="email"></label><input type="email" th:field="${user.email}" id="email"
+                                                      class="form-control" required
+                                                      th:maxlength="120" th:minlength="7"/>
                 </div>
             </div>
 
@@ -111,8 +110,9 @@
             <div class="form-group row">
                 <label class="col-form-label col-sm-4">First Name:</label>
                 <div class="col-sm-8">
-                    <input type="text" th:field="${user.firstName}" id="firstName" class="form-control" required th:maxlength="20"
-                           th:minlength="2"/>
+                    <label for="firstName"></label><input type="text" th:field="${user.firstName}" id="firstName"
+                                                          class="form-control" required th:maxlength="20"
+                                                          th:minlength="2"/>
                 </div>
             </div>
 
@@ -120,8 +120,9 @@
             <div class="form-group row">
                 <label class="col-form-label col-sm-4">Last Name:</label>
                 <div class="col-sm-8">
-                    <input type="text" th:field="${user.lastName}" id="lastName" class="form-control" required th:maxlength="20"
-                           th:minlength="2"/>
+                    <label for="lastName"></label><input type="text" th:field="${user.lastName}" id="lastName"
+                                                         class="form-control" required th:maxlength="20"
+                                                         th:minlength="2"/>
                 </div>
             </div>
 
@@ -129,8 +130,9 @@
             <div class="form-group row">
                 <label class="col-form-label col-sm-4">Password:</label>
                 <div class="col-sm-8">
-                    <input type="password" th:field="${user.password}" id="password" class="form-control" required th:maxlength="20"
-                           th:minlength="8"/>
+                    <label for="password"></label><input type="password" th:field="${user.password}" id="password"
+                                                         class="form-control" required th:maxlength="20"
+                                                         th:minlength="8"/>
                 </div>
             </div>
 
@@ -141,9 +143,10 @@
                     <!-- create thymeleaf block for get roles from mvc controller -->
                     <!-- and extract sub-object from main by name "role" -->
                     <th:block th:each="role : ${allrole}">
-                        <input type="checkbox" th:field="*{roles}" class="m-2" th:value="${role.getRoleID()}">
+                        <label>
+                            <input type="checkbox" th:field="*{roles}" class="m-2" th:value="${role.getRoleID()}">
+                        </label>
                         <small class="text-bold " th:text="${role.getRoleName()}"></small>
-                        </input>
                         - <small>[[${role.getRoleDescription()}]]</small>
                         <br/>
                     </th:block>
@@ -154,7 +157,9 @@
                 <label class="col-form-label col-sm-4">Enabled: </label>
                 <div class="col-sm-8">
 
-                    <input type="checkbox" th:field="${user.enabled}"/>
+                    <label>
+                        <input type="checkbox" th:field="${user.enabled}"/>
+                    </label>
                 </div>
             </div>
 
@@ -169,6 +174,36 @@
         </div>
 
     </form>
+
+    <!-- Dialog for user is not unique -->
+
+    <div class="modal modal-dialog-centered" tabindex="-1" style="visibility: hidden;" id="user-duplicated-dialog">
+
+        <!-- dialog place holder -->
+        <div class="modal-dialog">
+
+            <!-- dialog content place holder -->
+            <div class="modal-content">
+
+                <!-- dialog header -->
+                <div class="modal-header">
+                    <h5 class="modal-title" id="user-duplicated-dialog-title">Warning!</h5>
+                    <button type="button" id="user-duplicated-dialog-cancel" class="btn-close" onclick="hideDialog()"
+                            aria-label="Close"></button>
+                </div>
+
+                <!-- dialog body -->
+                <div class="modal-body">
+                    <span id="user-duplicated-dialog-description"></span>
+                </div>
+
+                <!-- dialog footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" onclick="hideDialog()">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
     <!-- This is footer Area -->
@@ -216,23 +251,49 @@
 
         const getParams = {email: userEmail};
 
-
         //create ajax rest API get call
-        $.get(getUrl,getParams, function (response) {
+        $.get(getUrl, getParams, function (response) {
 
+            // store signup form in memory
             let form;
             if (response === "OK") {
+
+                // assign first form in form variable
                 form = document.forms[0];
+
+                // submit data to server
                 form.submit();
 
             } else {
 
-                alert("This email is not unique");
+                // get dialog view and store it in memory
+                const dialogUserExist = document.getElementById('user-duplicated-dialog');
+
+                //manipulate dialog header HTML
+                document.getElementById('user-duplicated-dialog-title').innerHTML = "Warning!";
+
+                // manipulate dialog description HTML
+                document.getElementById('user-duplicated-dialog-description').innerHTML = "This email: <b>" + userEmail + "</b> is taken by another user";
+
+                // show dialog to user
+                dialogUserExist.style.visibility = 'visible';
+
 
             }
 
         });
 
+
+    }
+
+
+    // alert dialog hide function
+    async function hideDialog() {
+
+        // get dialog view and store it in memory
+        const dialogUserExist = document.getElementById('user-duplicated-dialog');
+
+        dialogUserExist.style.visibility = 'hidden';
 
     }
 
