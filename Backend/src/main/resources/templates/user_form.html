@@ -264,22 +264,21 @@
                 // submit data to server
                 form.submit();
 
-            } else {
+            } else if (response === "DUPLICATED") {
 
-                // get dialog view and store it in memory
-                const dialogUserExist = document.getElementById('user-duplicated-dialog');
-
-                //manipulate dialog header HTML
-                document.getElementById('user-duplicated-dialog-title').innerHTML = "Warning!";
-
-                // manipulate dialog description HTML
-                document.getElementById('user-duplicated-dialog-description').innerHTML = "This email: <b>" + userEmail + "</b> is taken by another user";
-
-                // show dialog to user
-                dialogUserExist.style.visibility = 'visible';
+              showDialog("Warning!", "This email: <b>" + userEmail + "</b> is taken by another user");
 
 
+            }else {
+
+
+                showDialog("Error", "Unknown response from server");
             }
+
+        }).fail(function (){
+
+            showDialog("Error", "Server can not be reached, please check your connection or firewall settings!");
+
 
         });
 
@@ -294,6 +293,23 @@
         const dialogUserExist = document.getElementById('user-duplicated-dialog');
 
         dialogUserExist.style.visibility = 'hidden';
+
+    }
+
+    async function showDialog(title, message){
+
+
+        // get dialog view and store it in memory
+        const dialogUserExist = document.getElementById('user-duplicated-dialog');
+
+        //manipulate dialog header HTML
+        document.getElementById('user-duplicated-dialog-title').innerHTML = title;
+
+        // manipulate dialog description HTML
+        document.getElementById('user-duplicated-dialog-description').innerHTML = message;
+
+        // show dialog to user
+        dialogUserExist.style.visibility = 'visible';
 
     }
 
