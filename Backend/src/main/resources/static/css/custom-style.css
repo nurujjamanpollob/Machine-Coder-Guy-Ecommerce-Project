@@ -33,3 +33,42 @@
 	font-weight: bold;
 
 }
+
+*.flex-item-center{
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin: 0 auto;
+}
+
+
+*.icon-color-white{
+
+	color: #eeeeee;
+}
+
+*.icon-color-dark{
+
+	color: #000612;
+}
+
+*.icon-color-silver{
+
+	color: silver;
+}
+
+*.icon-color-green{
+
+	color: green;
+}
+
+*.icon-color-red{
+
+	color: red;
+}
+
+a{
+
+	text-decoration: none;
+}
