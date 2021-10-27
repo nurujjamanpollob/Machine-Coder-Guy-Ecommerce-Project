@@ -18,17 +18,11 @@ package com.nurujjamanpollob.machinecoderguystore.backend.restcontroller;
 
 
 import com.nurujjamanpollob.machinecoderguystore.backend.users.UserService;
-import com.nurujjamanpollob.machinecoderguystore.backend.utility.RequestUtil;
 import com.nurujjamanpollob.machinecoderguystore.backend.utility.Variables;
 import com.nurujjamanpollob.machinecoderguystore.commonlibrary.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.request.RequestAttributes;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
-
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Nurujjaman Pollob
@@ -55,16 +49,10 @@ public class UserRestController {
 
     @GetMapping(Variables.GET_USERS_CHECK_EMAIL)
     @ResponseBody
-    public String checkIfEmailIsUnique(@RequestParam(name = "email") String email) {
+    public String checkIfEmailIsUnique(@RequestParam(name = "email") String email, @Nullable @RequestParam(name = "id", required = false) Integer id ) {
 
-        return userService.isUserUniqueByEmail(email) ? Variables.USER_EMAIL_NOT_DUPLICATED : Variables.USER_EMAIL_DUPLICATED;
+        return userService.isUserUniqueByEmail(id, email) ? Variables.USER_EMAIL_NOT_DUPLICATED : Variables.USER_EMAIL_DUPLICATED;
 
-    }
-
-    @PostMapping("/users/save_new_user")
-    public User saveNewUser(@RequestBody User newUser){
-
-        return userService.saveUser(newUser);
     }
 
 
