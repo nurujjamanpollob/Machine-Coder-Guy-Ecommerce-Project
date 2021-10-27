@@ -17,9 +17,11 @@
 package com.nurujjamanpollob.machinecoderguystore.backend.users;
 
 
+import com.nurujjamanpollob.machinecoderguystore.backend.exception.UserNotFoundException;
 import com.nurujjamanpollob.machinecoderguystore.commonlibrary.Role;
 import com.nurujjamanpollob.machinecoderguystore.commonlibrary.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.Nullable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -64,9 +66,27 @@ public class UserService {
      * @return true if an existing matched with this email address, else false
      * @see UserRepository#getUserByEmail for more information.
      */
-    public boolean isUserUniqueByEmail(String email){
+    public boolean isUserUniqueByEmail(@Nullable Integer id, String email){
 
-        return userRepository.getUserByEmail(email) == null;
+        User user = userRepository.getUserByEmail(email);
+
+        if (user == null) return true;
+        if (id == null) return false;
+        return userRepository.getUserByEmail(email).getId() == id.longValue();
+    }
+
+
+    public User getUserById(Long id) throws UserNotFoundException {
+
+            if(userRepository.findById(id).isPresent()){
+
+               return userRepository.findById(id).get();
+
+            }else {
+
+                throw new UserNotFoundException("User not found for given ID: "+id);
+            }
+
     }
 
 }
