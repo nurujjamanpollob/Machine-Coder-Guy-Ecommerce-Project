@@ -35,6 +35,9 @@ public class Variables {
     // Store URL for post mapping users/save
     public static final String POST_USERS_SAVE = "/users/save";
 
+    // Store URL for post mapping users/edit
+    public static final String USERS_EDIT_URL = "/users/edit/{id}";
+
     // Store email for post mapping users/check_email
     public static final String GET_USERS_CHECK_EMAIL = "/users/check_email";
 
@@ -44,6 +47,9 @@ public class Variables {
 
     // Email User not duplicated String
     public static String USER_EMAIL_NOT_DUPLICATED = "OK";
+
+    //pass page title for user create or edit form
+    public static String PAGE_TITLE_USER_FORM = "pageTitle";
 
 
     // Email User duplicated String
