@@ -21,10 +21,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=2.0">
     <meta name="robots" content="noindex,nofollow">
     <meta http-equiv="Content-Type" CONTENT="">
-    <title> Home - Machine Coder Guy Admin Panel </title>
+    <title>[[${pageTitle}]]</title>
     <!-- Reference Stylesheets and JavaScript Files -->
     <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/5.1.1/css/bootstrap.min.css}"/>
     <link rel="stylesheet" type="text/css" th:href="@{/css/custom-style.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/font-awesome-all.css}"/>
     <script type="text/javascript" th:src="@{/webjars/bootstrap/5.1.1/js/bootstrap.min.js}"></script>
     <script type="application/javascript" th:src="@{/webjars/jquery/3.6.0/jquery.min.js}"></script>
 <body>
@@ -87,7 +88,7 @@
     </div>
     <!-- Placeholder of headline area -->
     <div>
-        <h1> Create New User - Machine Coder Guy Admin Panel </h1>
+        <h1> [[${pageTitle}]] - Machine Coder Guy Admin Panel </h1>
     </div>
 
     <!-- create new user form area Object instance from Spring model class from attribute key user-->
@@ -95,6 +96,8 @@
 
     <form method="post" class="user-signup-form-max-width user-signup-form-margin" th:object="${user}"
           id="user-signup-form" th:action="@{/users/save}">
+
+        <input type="hidden" th:field="${user.id}" id="user-id">
         <div class="border border-secondary p-3">
 
             <div class="form-group row">
@@ -249,7 +252,16 @@
         // extract user email from DOM
         const userEmail = document.getElementById('email').value;
 
-        const getParams = {email: userEmail};
+        // extract user id(if any) exists from DOM
+        let userId = document.getElementById('user-id').value;
+
+        if(userId == null){
+
+            userId = -1;
+        }
+
+        // build parameter
+        const getParams = {id: userId, email: userEmail};
 
         //create ajax rest API get call
         $.get(getUrl, getParams, function (response) {
@@ -296,6 +308,7 @@
 
     }
 
+    //code show dialog function
     async function showDialog(title, message){
 
 
