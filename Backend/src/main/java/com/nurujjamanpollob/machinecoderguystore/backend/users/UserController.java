@@ -17,6 +17,7 @@
 package com.nurujjamanpollob.machinecoderguystore.backend.users;
 
 
+import com.nurujjamanpollob.machinecoderguystore.backend.exception.UserNotFoundException;
 import com.nurujjamanpollob.machinecoderguystore.backend.utility.Variables;
 import com.nurujjamanpollob.machinecoderguystore.commonlibrary.Role;
 import com.nurujjamanpollob.machinecoderguystore.commonlibrary.User;
@@ -24,7 +25,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -69,17 +72,47 @@ public class UserController {
         List<Role> roleList = userService.getAllRoles();
         model.addAttribute(Variables.MODEL_ATTRIBUTE_ALL_ROLE, roleList);
 
+        // pass page title as model attribute
+        model.addAttribute(Variables.PAGE_TITLE_USER_FORM, "Create new user");
+
 
         return Variables.DIRECTORY_WEB_NEW_USER_LINK;
     }
 
 
     @PostMapping(Variables.POST_USERS_SAVE)
-    public String saveNewUser(User user){
+    public String saveNewUser(User user, RedirectAttributes redirectAttributes){
 
         userService.saveUser(user);
 
+        redirectAttributes.addFlashAttribute("message", "This account is successfully created!");
+
+
         return Variables.REDIRECT_USER_AFTER_SAVE;
+    }
+
+
+    @GetMapping(Variables.USERS_EDIT_URL)
+    public String updateUser(@PathVariable(name = "id") Integer id,
+                             Model model,
+                             RedirectAttributes redirectAttributes){
+
+        try{
+
+            User user = userService.getUserById(Long.valueOf(id));
+            model.addAttribute("user", user);
+            model.addAttribute(Variables.PAGE_TITLE_USER_FORM, "Edit Existing User");
+            List<Role> roleList = userService.getAllRoles();
+            model.addAttribute(Variables.MODEL_ATTRIBUTE_ALL_ROLE, roleList);
+            return "user_form";
+
+        } catch (UserNotFoundException e) {
+           redirectAttributes.addFlashAttribute("message", e.getMessage());
+            return Variables.REDIRECT_USER_AFTER_SAVE;
+        }
+
+
+
     }
 
 
