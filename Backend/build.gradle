@@ -40,6 +40,7 @@ project(":Backend") {
         implementation 'org.springframework.boot:spring-boot-starter-web:2.5.5'
         implementation 'org.webjars:jquery:3.6.0'
         implementation 'org.webjars:bootstrap:5.1.1'
+        implementation group: 'commons-io', name: 'commons-io', version: '2.6'
         testImplementation('org.springframework.boot:spring-boot-starter-test:2.5.5')
         implementation('org.hibernate:hibernate-c3p0:5.5.7.Final')
         runtimeOnly 'mysql:mysql-connector-java:8.0.25'

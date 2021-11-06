@@ -48,4 +48,8 @@ public class Variables {
     public static final String BASE_PACKAGE_NAME = "com.nurujjamanpollob.machinecoderguystore.*";
 
 
+    // Here we are storing application context path
+    public static final String APPLICATION_CONTEXT_PATH = "/MachineCoderGuyAdmin/";
+
+
 }

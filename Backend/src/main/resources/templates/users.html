@@ -31,6 +31,7 @@
     <script type="text/javascript" th:src="@{/webjars/bootstrap/5.1.1/js/bootstrap.min.js}"></script>
     <script type="text/javascript" th:src="@{/webjars/jquery/3.6.0/jquery.min.js}"></script>
 <body>
+
 <!-- Create body container-->
 <div class="container-fluid">
     <!-- Placeholder for top navigation -->
@@ -92,14 +93,13 @@
     <div>
         <h1> Manage Users - Machine Coder Guy Admin Panel </h1>
         <a th:href="@{/users/new}">Create new User</a>
+
     </div>
 
     <!-- create user table area -->
-
     <table class="table table-responsive table-bordered table-striped table-hover">
         <thead class="dropdown-menu-dark tableSubHeadingColor">
         <tr>
-
             <th>User ID</th>
             <th>Photos</th>
             <th>Email</th>
@@ -114,39 +114,124 @@
         <!-- create table body that will contain all user information presented in table style -->
         <tbody>
 
-        <!-- get user list programmatically from service controller -->
+
+        <!-- get user list programmatically from Service -->
         <tr th:each="user : ${alluser}">
 
             <td>[[${user.id}]]</td>
-            <td><span class="flex-item-center"><i class="fas fa-portrait fa-3x icon-color-dark "></i> </span></td>
+            <td>
+                <span class="flex-item-center">
+                    <img th:src="${user.getUserImagePath()}" class="image-profile-icon" />
+                </span>
+
+            </td>
             <td>[[${user.email}]]</td>
             <td>[[${user.firstName}]]</td>
             <td>[[${user.lastName}]]</td>
             <td>[[${user.roles}]]</td>
             <td>
-
                 <!-- if user is enabled, show green icon-->
-                <a th:if="${user.enabled == true}"><i class="fas fa-check-circle icon-color-green fa-2x"></i> </a>
+                <a th:if="${user.enabled == true}" title="Disable this user" th:href="@{'/users/' + ${user.id} + '/enabled/false'}"><i class="fas fa-check-circle icon-color-green fa-2x"></i> </a>
                 <!-- if user is disabled, show dark icon -->
-                <a th:if="${user.enabled == false}" class="fas fa-check-circle icon-color-dark fa-2x"></a>
-
-
+                <a th:href="@{'/users/' + ${user.id} + '/enabled/true'}" title="Enable this user" th:if="${user.enabled == false}" class="fas fa-check-circle icon-color-dark fa-2x"></a>
             </td>
 
             <td>
                 <a class="fas fa-pen-square fa-2x icon-color-green"  th:href="@{'/users/edit/' +  ${user.id}}"></a>
                 &nbsp;
-                <a class="fas fa-minus-circle fa-2x icon-color-red"></a> </td>
+                <a id="link-delete"  th:userId="${user.id}" th:href="@{'/users/delete/' +  ${user.id}}" class="fas button-border-none fa-minus-circle link-d fa-2x icon-color-red"></a>
 
+            </td>
         </tr>
-
         </tbody>
     </table>
+
+    <!-- Modal Dialog Placeholder -->
+    <div class="modal modal-dialog-centered" tabindex="-1" style="visibility: hidden;" id="user-duplicated-dialog">
+
+        <!-- dialog place holder -->
+        <div class="modal-dialog">
+
+            <!-- dialog content place holder -->
+            <div class="modal-content">
+
+                <!-- dialog header -->
+                <div class="modal-header">
+                    <h5 class="modal-title" id="user-duplicated-dialog-title">Warning!</h5>
+                    <button type="button" id="user-duplicated-dialog-cancel" class="btn-close" onclick="hideDialog()"
+                            aria-label="Close"></button>
+                </div>
+
+                <!-- dialog body -->
+                <div class="modal-body">
+                    <span id="user-duplicated-dialog-description"></span>
+                </div>
+
+                <!-- dialog footer -->
+                <div class="modal-footer">
+                    <a type="button" class="btn btn-danger" id="delete-user-button" href="" title="Delete this user">DELETE</a>
+                    <button type="button" class="btn btn-danger" onclick="hideDialog()">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- This is footer Area -->
     <div class="text-center">
         <p>Machine Coder guy control panel - Copyright &copy; Nurujjaman Pollob 2021</p>
     </div>
 </div>
+
+<input type="hidden" id="id-holder" value="-1">
+<!-- create js functions here -->
+<script type="text/javascript">
+
+
+    $(document).ready(function (){
+
+        // when
+        $("#link-delete").on("click", function (e){
+
+            // prevent default behaviour
+            e.preventDefault();
+            const linkObject = $(this);
+            const userID = linkObject.attr("userId");
+            $("#delete-user-button").attr("href", linkObject.attr("href"));
+
+            showDialog("Delete Confirmation!", "Are you sure you want to delete this user? <br /> ID Number: "+"<b>"+userID+"</b>");
+
+        });
+
+    });
+
+        // alert dialog hide function
+        async function hideDialog() {
+
+            // get dialog view and store it in memory
+            const dialogUserExist = document.getElementById('user-duplicated-dialog');
+
+            dialogUserExist.style.visibility = 'hidden';
+
+        }
+
+        //code show dialog function
+        async function showDialog(title, message){
+
+            // get dialog view and store it in memory
+            const dialogUserExist = document.getElementById('user-duplicated-dialog');
+
+            //manipulate dialog header HTML
+            document.getElementById('user-duplicated-dialog-title').innerHTML = title;
+
+            // manipulate dialog description HTML
+            document.getElementById('user-duplicated-dialog-description').innerHTML = message;
+
+            // show dialog to user
+            dialogUserExist.style.visibility = 'visible';
+
+
+    }
+
+</script>
 </body>
 </html>

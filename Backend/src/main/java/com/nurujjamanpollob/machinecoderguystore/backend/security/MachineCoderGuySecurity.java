@@ -24,17 +24,36 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+/**
+ * @author Nurujjaman Pollob
+ * Configuration class to configure Spring Web Security setting
+ * For more information, plese see those class documentation:
+ * @see org.springframework.security.config.annotation.SecurityConfigurer
+ * @see WebSecurityConfigurerAdapter
+ * @see Configuration
+ * @see EnableWebSecurity
+ */
 @Configuration
 @EnableWebSecurity
 public class MachineCoderGuySecurity extends WebSecurityConfigurerAdapter {
 
-
+    /**
+     * Create a bean that replace Spring default password Encoder
+     * @return Password Encoder Object we prefer to use!
+     */
     @Bean
-    public PasswordEncoder passwordEncoder(){
+    public PasswordEncoder passwordEncoder() {
 
         return new BCryptPasswordEncoder();
     }
 
+
+    /**
+     * @param http Spring injected HttpSecurity object to configure
+     *             Web security settings
+     * @throws Exception if you pass conflicting or wrong settings
+     * @see HttpSecurity doc for more information
+     */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 

@@ -16,6 +16,10 @@
 
 package com.nurujjamanpollob.machinecoderguystore.backend.exception;
 
+/**
+ * @author Nurujjaman Pollob
+ * Common Exception class to show customized Exception
+ */
 public class UserNotFoundException extends Exception{
 
     public UserNotFoundException(String message){

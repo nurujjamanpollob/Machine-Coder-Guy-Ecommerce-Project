@@ -23,10 +23,10 @@ import org.springframework.data.repository.CrudRepository;
 
 /**
  * @author Nurujjaman Pollob
+ * Inherited CRUD repository class for Role entity.
+ * @see CrudRepository class for more information.
  */
 
-
-//Create interface RoleRepository extends CrudRepository with given Params<Role, ID>
 @org.springframework.stereotype.Repository
 public interface RoleRepository extends CrudRepository<Role, Integer> {
 

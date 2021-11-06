@@ -177,5 +177,21 @@ public class UserRepositoryTests {
 
 
 
+    @Test
+    public void testDisableUser(){
+
+        userRepository.updateUserStatus(12L, false);
+
+    }
+
+
+    @Test
+    public void testEnableUser(){
+
+        userRepository.updateUserStatus(12L, true);
+
+    }
+
+
 
 }

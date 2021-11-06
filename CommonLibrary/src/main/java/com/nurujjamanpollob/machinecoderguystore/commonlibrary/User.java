@@ -62,6 +62,8 @@ public class User {
     private boolean enabled;
 
 
+
+
     // create roles set
     @ManyToMany
     @JoinTable(
@@ -157,5 +159,16 @@ public class User {
                 ", enabled=" + enabled +
                 ", roles=" + roles +
                 '}';
+    }
+
+
+
+    @Transient
+    public String getUserImagePath(){
+
+        // if user image is not present, or creating new user
+        if(this.id == null || this.photo == null)
+            return Variables.APPLICATION_CONTEXT_PATH + "images/sample-user-photo.png";
+        return Variables.APPLICATION_CONTEXT_PATH + "user-files/" + this.id + "/avatar/" + this.photo;
     }
 }

@@ -91,13 +91,14 @@
         <h1> [[${pageTitle}]] - Machine Coder Guy Admin Panel </h1>
     </div>
 
-    <!-- create new user form area Object instance from Spring model class from attribute key user-->
-    <!--th:action="@{/users/save}"-->
-
+    <!-- create new user form area Object instance from Spring View Model class from attribute key user-->
     <form method="post" class="user-signup-form-max-width user-signup-form-margin" th:object="${user}"
-          id="user-signup-form" th:action="@{/users/save}">
+          id="user-signup-form" th:action="@{/users/save}" enctype="multipart/form-data">
 
+        <!-- store UID -->
         <input type="hidden" th:field="${user.id}" id="user-id">
+
+        <!-- start form element place holder -->
         <div class="border border-secondary p-3">
 
             <div class="form-group row">
@@ -167,6 +168,20 @@
             </div>
 
 
+            <div class="form-group row">
+                <label class="col-form-label col-sm-4">User Avatar Photo: </label>
+                <div class="col-sm-8">
+
+                    <label>
+                        <input type="file" name="user-avatar-photo" class="mb-2" id="user-avatar-photo"
+                               accept="image/*"/>
+                        <img id="user-thumbnail" alt="User photo preview" class="img-fluid"
+                             th:src="${user.getUserImagePath()}"/>
+                    </label>
+                </div>
+            </div>
+
+
             <!-- submit & cancel button -->
             <div class="text-center">
                 <input type="submit" value="Save" class="btn btn-primary m-3">
@@ -178,7 +193,7 @@
 
     </form>
 
-    <!-- Dialog for user is not unique -->
+    <!-- Modal Dialog -->
 
     <div class="modal modal-dialog-centered" tabindex="-1" style="visibility: hidden;" id="user-duplicated-dialog">
 
@@ -221,6 +236,7 @@
 
     $(document).ready(function () {
 
+        // When form cancel button clicked, navigate to the users page
         $("#cancelButton").on("click", function () {
 
             window.location = "[[@{/users}]]";
@@ -228,12 +244,36 @@
         })
 
 
+        // Upload Image form file changed function
+        $("#user-avatar-photo").change(function () {
+
+            const file = this.files[0];
+            const fileLength = file.size;
+
+
+            // File length is more than 1 MB?
+            if (fileLength > 1048576) {
+
+                // Show a warning Dialog
+                showDialog("Warning", "Your file must be equal or less than 1 MB size");
+                this.reportValidity();
+
+            } else {
+
+                // show user uploaded image in the Preview
+                showThumbnailFromInput(this);
+
+            }
+
+
+        });
+
+
+        // When a user press submit button, this event will be fired.
         $("#user-signup-form").submit(function (event) {
 
             //stop submit the form, we will post it manually.
-
             event.preventDefault();
-
             // create rest call with this function
             checkIfEmailIsUnique();
 
@@ -243,7 +283,10 @@
     })
 
 
-    // checks if user input email is unique, and not acquired by anyone else.
+    /**
+     * Function to checks if user input email is unique, and not acquired by anyone else.
+     * @returns Nothing!
+     */
     async function checkIfEmailIsUnique() {
 
         // API base URL
@@ -255,8 +298,7 @@
         // extract user id(if any) exists from DOM
         let userId = document.getElementById('user-id').value;
 
-        if(userId == null){
-
+        if (userId == null) {
             userId = -1;
         }
 
@@ -272,44 +314,57 @@
 
                 // assign first form in form variable
                 form = document.forms[0];
-
                 // submit data to server
                 form.submit();
 
-            } else if (response === "DUPLICATED") {
+            }
+            // Input email is taken by other User
+            else if (response === "DUPLICATED") {
 
-              showDialog("Warning!", "This email: <b>" + userEmail + "</b> is taken by another user");
+                showDialog("Warning!", "This email: <b>" + userEmail + "</b> is taken by another user");
 
+            }
 
-            }else {
-
-
+            // When server sends weird response!
+            else {
                 showDialog("Error", "Unknown response from server");
             }
 
-        }).fail(function (){
+        })
+            // When a call is failed!
+            .fail(function () {
 
-            showDialog("Error", "Server can not be reached, please check your connection or firewall settings!");
+                showDialog("Error", "Server can not be reached, please check your connection or firewall settings!");
 
 
-        });
+            });
 
 
     }
 
 
-    // alert dialog hide function
+    /**
+     * Function to hide Alert Dialog
+     * @returns Nothing!
+     */
     async function hideDialog() {
 
         // get dialog view and store it in memory
         const dialogUserExist = document.getElementById('user-duplicated-dialog');
 
+        // remove dialog view
         dialogUserExist.style.visibility = 'hidden';
 
     }
 
-    //code show dialog function
-    async function showDialog(title, message){
+    /**
+     * Function to show dialog to front end
+     *
+     * @param title Title to set in Dialog
+     * @param message Message to set in Dialog
+     * @returns Nothing!
+     */
+    async function showDialog(title, message) {
 
 
         // get dialog view and store it in memory
@@ -323,6 +378,25 @@
 
         // show dialog to user
         dialogUserExist.style.visibility = 'visible';
+
+    }
+
+
+    /**
+     * @param input get Input file Stream
+     * @returns {Promise<void>} return Image Data that can be previewed.
+     */
+    async function showThumbnailFromInput(input) {
+
+        if (input.files && input.files[0]) {
+
+            const fileReader = new FileReader();
+            fileReader.onload = function (e) {
+                $('#user-thumbnail').attr('src', e.target.result);
+            }
+            fileReader.readAsDataURL(input.files[0]);
+        }
+
 
     }
 

@@ -14,27 +14,19 @@
  *
  */
 
-package com.nurujjamanpollob.machinecoderguystore.backend;
-
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
+package com.nurujjamanpollob.machinecoderguystore.backend.utility;
 
 /**
  * @author Nurujjaman Pollob
- * Root controller of this application
+ * <p>
+ * Class to throw malicious String Exception
  */
 
-@Controller
-public class MainController {
+@SuppressWarnings({"unused"})
+public class MaliciousStringException extends Exception {
 
-    /**
-     *
-     * @return root HTML file of this application
-     * It resolves application context path root
-     */
-    @GetMapping("/")
-    public String machineCoderGuyHomePage() {
-        return "index";
+    public MaliciousStringException(String cause) {
+
+        super(cause);
     }
-
 }

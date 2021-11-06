@@ -22,7 +22,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.ComponentScan;
 
-// entry point of out Backend module application
+/**
+ * @author Nurujjaman Pollob
+ * Starting class of machine coder guy backend application
+ */
 @SpringBootApplication
 @EntityScan({Variables.COMMON_LIBRARY_ENTRY_POINT, com.nurujjamanpollob.machinecoderguystore.backend.utility.Variables.BACKEND_LIBRARY_ENTRY_POINT_USER})
 @ComponentScan(basePackages = {Variables.BASE_PACKAGE_NAME})

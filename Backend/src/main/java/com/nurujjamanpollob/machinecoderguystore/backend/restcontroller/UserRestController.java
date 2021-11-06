@@ -19,14 +19,14 @@ package com.nurujjamanpollob.machinecoderguystore.backend.restcontroller;
 
 import com.nurujjamanpollob.machinecoderguystore.backend.users.UserService;
 import com.nurujjamanpollob.machinecoderguystore.backend.utility.Variables;
-import com.nurujjamanpollob.machinecoderguystore.commonlibrary.User;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author Nurujjaman Pollob
- * <p>
  * Rest Controller Class for User object and UserService Object
  * @see com.nurujjamanpollob.machinecoderguystore.commonlibrary.User and
  * @see com.nurujjamanpollob.machinecoderguystore.backend.users.UserService for more information
@@ -35,9 +35,14 @@ import org.springframework.web.bind.annotation.*;
 public class UserRestController {
 
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
+    /**
+     * @param service Spring injected bean of UserService class
+     */
+    public UserRestController(UserService service) {
+        this.userService = service;
+    }
 
 
     /**
@@ -49,8 +54,7 @@ public class UserRestController {
 
     @GetMapping(Variables.GET_USERS_CHECK_EMAIL)
     @ResponseBody
-    public String checkIfEmailIsUnique(@RequestParam(name = "email") String email, @Nullable @RequestParam(name = "id", required = false) Integer id ) {
-
+    public String checkIfEmailIsUnique(@RequestParam(name = "email") String email, @Nullable @RequestParam(name = "id", required = false) Integer id) {
         return userService.isUserUniqueByEmail(id, email) ? Variables.USER_EMAIL_NOT_DUPLICATED : Variables.USER_EMAIL_DUPLICATED;
 
     }

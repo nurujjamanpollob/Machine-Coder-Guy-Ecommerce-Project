@@ -25,12 +25,12 @@ import java.util.Arrays;
 
 /**
  * @author Nurujjaman Pollob
- *
+ * <p>
  * Utility class designed to extract IP address from HTTP request
  * @see HttpServletRequest#getRemoteAddr() for more information
- *
  */
 
+@SuppressWarnings({"unused"})
 public class RequestUtil {
 
 
@@ -52,28 +52,35 @@ public class RequestUtil {
     };
 
     /**
-     *
      * @param requestAttributes pass request attribute parameter from HTTP request
      * @return IP address of client, if attribute is null it is simply returns 0.0.0.0
      * You can call this method with this parameter: RequestContextHolder.currentRequestAttributes()
-     * @see RequestContextHolder#currentRequestAttributes() for more information
+     * @see RequestContextHolder#currentRequestAttributes() for more information, Also
+     * @see HttpServletRequest for more information.
      */
-    public static String getRemoteIP(RequestAttributes requestAttributes)
-    {
-        if (requestAttributes == null)
-        {
+    public static String getRemoteIP(RequestAttributes requestAttributes) {
+        // if the requestAttributes is null
+        if (requestAttributes == null) {
             return "0.0.0.0";
         }
+
+        // get HttpServletRequest object from RequestAttributes
         HttpServletRequest request = ((ServletRequestAttributes) requestAttributes).getRequest();
+
+        // create a simple stream of IP Headers
         String ip = Arrays.stream(IP_HEADER_NAMES)
+                // get single IP header name from IP_HEADER_NAMES
                 .map(request::getHeader)
+                // filter by if single header is not null and this header is must not unknown by ignoring case
                 .filter(h -> h != null && h.length() != 0 && !"unknown".equalsIgnoreCase(h))
+                // we will then split ip address by (,) and get first address from this map
                 .map(h -> h.split(",")[0])
+
+                // add this to ip address String, like ip + ":" + split[0] from current get header value
                 .reduce("", (h1, h2) -> h1 + ":" + h2);
+
         return ip + request.getRemoteAddr();
     }
-
-
 
 
 }

@@ -72,3 +72,15 @@ a{
 
 	text-decoration: none;
 }
+
+
+*.button-border-none{
+
+	border: none;
+}
+
+*.image-profile-icon{
+
+	width: 80px;
+	height: 80px;
+}
